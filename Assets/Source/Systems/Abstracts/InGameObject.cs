@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Source.Systems.Abstracts
+namespace FactoryGame.Source.Systems.Abstracts
 {
     public abstract class InGameObject : IDisposable
     {
@@ -55,13 +55,13 @@ namespace Assets.Source.Systems.Abstracts
             set => GameObject.transform.localRotation = value;
         }
 
-        public Vector3 Scale
+        public Vector2 Scale
         {
             get => GameObject.transform.localScale;
             set => GameObject.transform.localScale = value;
         }
 
-        public Vector3 Velocity { get; set; }
+        public Vector2 Velocity { get; set; }
         public float Drag { get; set; } = 2f;
         public float Friction { get; set; } = 6f;
 
@@ -131,7 +131,7 @@ namespace Assets.Source.Systems.Abstracts
             if (Gravity != 0f)
             {
                 // add gravity
-                Velocity += Vector3.ClampMagnitude(new Vector3(0, -Gravity, 0) * Time.deltaTime, 3);
+                //Velocity += Vector3.ClampMagnitude(new Vector3(0, -Gravity, 0) * Time.deltaTime, 3);
             }
 
             // add drag/friction

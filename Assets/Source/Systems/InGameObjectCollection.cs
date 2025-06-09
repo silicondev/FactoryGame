@@ -1,4 +1,4 @@
-﻿using Assets.Source.Systems.Abstracts;
+﻿using FactoryGame.Source.Systems.Abstracts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Source.Systems
+namespace FactoryGame.Source.Systems
 {
     public class InGameObjectCollection : IEnumerable<InGameObject>
     {
