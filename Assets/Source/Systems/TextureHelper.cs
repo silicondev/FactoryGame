@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FactoryGame.Source.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,13 @@ namespace FactoryGame.Source.Systems
     public static class TextureHelper
     {
         public static Dictionary<string, Texture2D> Textures { get; } = new();
+        public static Dictionary<TileType, Location> TileUV = new()
+        {
+            { TileType.VOID, (0, 15) },
+            { TileType.GRASS, (0, 10) },
+            { TileType.STONE, (15, 0) },
+            { TileType.IRON_ORE, (6, 13) }
+        };
 
         public static Texture2D LoadFromImage(string path)
         {

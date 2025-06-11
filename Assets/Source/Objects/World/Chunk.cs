@@ -5,11 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using FactoryGame.Source.Systems;
+using FactoryGame.Source.Models;
 
 namespace FactoryGame.Source.Objects.World
 {
     public class Chunk : InGameObject
     {
+        public Location Id { get; }
+
+        public Chunk(Location id)
+        {
+            Id = id;
+        }
+
         protected override void Build(GameObject obj)
         {
             (Vector2[] vertices, int[] triangles, Vector2[] uv) = GetMeshData();
@@ -24,8 +32,7 @@ namespace FactoryGame.Source.Objects.World
                 return;
 
             obj.GetComponent<MeshFilter>().mesh = mesh;
-            //obj.GetComponent<Renderer>().material.color = Color.red;
-            obj.GetComponent<Renderer>().material.SetTexture("_MainTex", TextureHelper.Textures["World"]);
+            obj.GetComponent<Renderer>().material.SetTexture("_BaseMap", TextureHelper.Textures["World"]);
         }
 
         protected override (Vector3 position, Vector3 velocity) CalculateMovement() => (Position, Vector3.zero);
@@ -78,13 +85,26 @@ namespace FactoryGame.Source.Objects.World
                     vertices.Add(new Vector2(xs + s, ys));
                     vertices.Add(new Vector2(xs, ys + s));
 
-                    uv.Add(new Vector2(xs, ys));
-                    uv.Add(new Vector2(xs, ys + s));
-                    uv.Add(new Vector2(xs + s, ys));
-                    
-                    uv.Add(new Vector2(xs + s, ys + s));
-                    uv.Add(new Vector2(xs + s, ys));
-                    uv.Add(new Vector2(xs, ys + s));
+                    var tile = GameSystem.WorldData[((Id.X * 16) + x, (Id.Y * 16) + y)];
+                    var uvLoc = TextureHelper.TileUV[tile].ToVector2() * s;
+                    float xu = uvLoc.x;
+                    float yu = uvLoc.y;
+
+                    uv.Add(new Vector2(xu, yu));
+                    uv.Add(new Vector2(xu, yu + s));
+                    uv.Add(new Vector2(xu + s, yu));
+
+                    uv.Add(new Vector2(xu + s, yu + s));
+                    uv.Add(new Vector2(xu + s, yu));
+                    uv.Add(new Vector2(xu, yu + s));
+
+                    //uv.Add(new Vector2(0, 0));
+                    //uv.Add(new Vector2(0, s));
+                    //uv.Add(new Vector2(s, 0));
+
+                    //uv.Add(new Vector2(s, s));
+                    //uv.Add(new Vector2(s, 0));
+                    //uv.Add(new Vector2(0, s));
                 }
             }
 
